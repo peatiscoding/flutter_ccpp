@@ -1,0 +1,4 @@
+framework module PGW {
+  header "PGW-Swift.h"
+  requires objc
+}
