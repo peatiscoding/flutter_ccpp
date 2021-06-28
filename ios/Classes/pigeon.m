@@ -22,10 +22,6 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
       };
 }
 
-@interface CcppPaymentCode ()
-+(CcppPaymentCode*)fromMap:(NSDictionary*)dict;
--(NSDictionary*)toMap;
-@end
 @interface MakeTokenizedCreditCardPaymentInput ()
 +(MakeTokenizedCreditCardPaymentInput*)fromMap:(NSDictionary*)dict;
 -(NSDictionary*)toMap;
@@ -35,30 +31,12 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
 -(NSDictionary*)toMap;
 @end
 
-@implementation CcppPaymentCode
-+(CcppPaymentCode*)fromMap:(NSDictionary*)dict {
-  CcppPaymentCode* result = [[CcppPaymentCode alloc] init];
-  result.code = dict[@"code"];
-  if ((NSNull *)result.code == [NSNull null]) {
-    result.code = nil;
-  }
-  return result;
-}
--(NSDictionary*)toMap {
-  return [NSDictionary dictionaryWithObjectsAndKeys:(self.code ? self.code : [NSNull null]), @"code", nil];
-}
-@end
-
 @implementation MakeTokenizedCreditCardPaymentInput
 +(MakeTokenizedCreditCardPaymentInput*)fromMap:(NSDictionary*)dict {
   MakeTokenizedCreditCardPaymentInput* result = [[MakeTokenizedCreditCardPaymentInput alloc] init];
   result.paymentToken = dict[@"paymentToken"];
   if ((NSNull *)result.paymentToken == [NSNull null]) {
     result.paymentToken = nil;
-  }
-  result.paymentCode = [CcppPaymentCode fromMap:dict[@"paymentCode"]];
-  if ((NSNull *)result.paymentCode == [NSNull null]) {
-    result.paymentCode = nil;
   }
   result.cardToken = dict[@"cardToken"];
   if ((NSNull *)result.cardToken == [NSNull null]) {
@@ -71,7 +49,7 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
   return result;
 }
 -(NSDictionary*)toMap {
-  return [NSDictionary dictionaryWithObjectsAndKeys:(self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.paymentCode ? [self.paymentCode toMap] : [NSNull null]), @"paymentCode", (self.cardToken ? self.cardToken : [NSNull null]), @"cardToken", (self.securityCode ? self.securityCode : [NSNull null]), @"securityCode", nil];
+  return [NSDictionary dictionaryWithObjectsAndKeys:(self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.cardToken ? self.cardToken : [NSNull null]), @"cardToken", (self.securityCode ? self.securityCode : [NSNull null]), @"securityCode", nil];
 }
 @end
 

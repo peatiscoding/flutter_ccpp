@@ -27,9 +27,6 @@ class FlutterCcpp {
 
   static Future<CcppPaymentResponse> makeTokenizedCreditCardPayment(String paymentToken, String cardToken, String securityCode) async {
     var req = MakeTokenizedCreditCardPaymentInput();
-    var paymentCode = CcppPaymentCode();
-    paymentCode.code = "CC";
-    req.paymentCode = paymentCode;
     req.cardToken = cardToken;
     req.paymentToken = paymentToken;
     req.securityCode = securityCode;

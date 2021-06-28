@@ -7,17 +7,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class CcppPaymentCode;
 @class MakeTokenizedCreditCardPaymentInput;
 @class CcppPaymentResponse;
 
-@interface CcppPaymentCode : NSObject
-@property(nonatomic, copy, nullable) NSString * code;
-@end
-
 @interface MakeTokenizedCreditCardPaymentInput : NSObject
 @property(nonatomic, copy, nullable) NSString * paymentToken;
-@property(nonatomic, strong, nullable) CcppPaymentCode * paymentCode;
 @property(nonatomic, copy, nullable) NSString * cardToken;
 @property(nonatomic, copy, nullable) NSString * securityCode;
 @end

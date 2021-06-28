@@ -7,32 +7,14 @@ import 'dart:typed_data' show Uint8List, Int32List, Int64List, Float64List;
 
 import 'package:flutter/services.dart';
 
-class CcppPaymentCode {
-  String? code;
-
-  Object encode() {
-    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['code'] = code;
-    return pigeonMap;
-  }
-
-  static CcppPaymentCode decode(Object message) {
-    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
-    return CcppPaymentCode()
-      ..code = pigeonMap['code'] as String?;
-  }
-}
-
 class MakeTokenizedCreditCardPaymentInput {
   String? paymentToken;
-  CcppPaymentCode? paymentCode;
   String? cardToken;
   String? securityCode;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['paymentToken'] = paymentToken;
-    pigeonMap['paymentCode'] = paymentCode == null ? null : paymentCode!.encode();
     pigeonMap['cardToken'] = cardToken;
     pigeonMap['securityCode'] = securityCode;
     return pigeonMap;
@@ -42,9 +24,6 @@ class MakeTokenizedCreditCardPaymentInput {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return MakeTokenizedCreditCardPaymentInput()
       ..paymentToken = pigeonMap['paymentToken'] as String?
-      ..paymentCode = pigeonMap['paymentCode'] != null
-          ? CcppPaymentCode.decode(pigeonMap['paymentCode']!)
-          : null
       ..cardToken = pigeonMap['cardToken'] as String?
       ..securityCode = pigeonMap['securityCode'] as String?;
   }

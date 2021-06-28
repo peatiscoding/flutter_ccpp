@@ -15,33 +15,10 @@ import java.util.HashMap;
 public class Pigeon {
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static class CcppPaymentCode {
-    private String code;
-    public String getCode() { return code; }
-    public void setCode(String setterArg) { this.code = setterArg; }
-
-    Map<String, Object> toMap() {
-      Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("code", code);
-      return toMapResult;
-    }
-    static CcppPaymentCode fromMap(Map<String, Object> map) {
-      CcppPaymentCode fromMapResult = new CcppPaymentCode();
-      Object code = map.get("code");
-      fromMapResult.code = (String)code;
-      return fromMapResult;
-    }
-  }
-
-  /** Generated class from Pigeon that represents data sent in messages. */
   public static class MakeTokenizedCreditCardPaymentInput {
     private String paymentToken;
     public String getPaymentToken() { return paymentToken; }
     public void setPaymentToken(String setterArg) { this.paymentToken = setterArg; }
-
-    private CcppPaymentCode paymentCode;
-    public CcppPaymentCode getPaymentCode() { return paymentCode; }
-    public void setPaymentCode(CcppPaymentCode setterArg) { this.paymentCode = setterArg; }
 
     private String cardToken;
     public String getCardToken() { return cardToken; }
@@ -54,7 +31,6 @@ public class Pigeon {
     Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
       toMapResult.put("paymentToken", paymentToken);
-      toMapResult.put("paymentCode", paymentCode.toMap());
       toMapResult.put("cardToken", cardToken);
       toMapResult.put("securityCode", securityCode);
       return toMapResult;
@@ -63,8 +39,6 @@ public class Pigeon {
       MakeTokenizedCreditCardPaymentInput fromMapResult = new MakeTokenizedCreditCardPaymentInput();
       Object paymentToken = map.get("paymentToken");
       fromMapResult.paymentToken = (String)paymentToken;
-      Object paymentCode = map.get("paymentCode");
-      fromMapResult.paymentCode = CcppPaymentCode.fromMap((Map)paymentCode);
       Object cardToken = map.get("cardToken");
       fromMapResult.cardToken = (String)cardToken;
       Object securityCode = map.get("securityCode");
