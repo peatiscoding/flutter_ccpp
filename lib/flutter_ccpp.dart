@@ -30,6 +30,10 @@ class FlutterCcpp {
     req.cardToken = cardToken;
     req.paymentToken = paymentToken;
     req.securityCode = securityCode;
-    return await _api.makeTokenizedCreditCardPayment(req);
+    var resp = await _api.makeTokenizedCreditCardPayment(req);
+    if (resp.error != null) {
+      throw Exception(resp.error);
+    }
+    return resp;
   }
 }

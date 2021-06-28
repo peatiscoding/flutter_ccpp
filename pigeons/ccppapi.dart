@@ -7,8 +7,9 @@ class MakeTokenizedCreditCardPaymentInput {
 }
 
 class CcppPaymentResponse {
-  String responseCode;
+  String? responseCode;
   String? redirectUrl;
+  String? error;
 }
 
 @HostApi()

@@ -3,12 +3,12 @@
 
 package me.peatiscoding.flutter_ccpp.pigeon;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.StandardMessageCodec;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 /** Generated class from Pigeon. */
 @SuppressWarnings({"unused", "unchecked", "CodeBlock2Expr", "RedundantSuppression"})
@@ -57,10 +57,15 @@ public class Pigeon {
     public String getRedirectUrl() { return redirectUrl; }
     public void setRedirectUrl(String setterArg) { this.redirectUrl = setterArg; }
 
+    private String error;
+    public String getError() { return error; }
+    public void setError(String setterArg) { this.error = setterArg; }
+
     Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
       toMapResult.put("responseCode", responseCode);
       toMapResult.put("redirectUrl", redirectUrl);
+      toMapResult.put("error", error);
       return toMapResult;
     }
     static CcppPaymentResponse fromMap(Map<String, Object> map) {
@@ -69,6 +74,8 @@ public class Pigeon {
       fromMapResult.responseCode = (String)responseCode;
       Object redirectUrl = map.get("redirectUrl");
       fromMapResult.redirectUrl = (String)redirectUrl;
+      Object error = map.get("error");
+      fromMapResult.error = (String)error;
       return fromMapResult;
     }
   }

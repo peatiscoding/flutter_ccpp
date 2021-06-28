@@ -32,11 +32,13 @@ class MakeTokenizedCreditCardPaymentInput {
 class CcppPaymentResponse {
   String? responseCode;
   String? redirectUrl;
+  String? error;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['responseCode'] = responseCode;
     pigeonMap['redirectUrl'] = redirectUrl;
+    pigeonMap['error'] = error;
     return pigeonMap;
   }
 
@@ -44,7 +46,8 @@ class CcppPaymentResponse {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return CcppPaymentResponse()
       ..responseCode = pigeonMap['responseCode'] as String?
-      ..redirectUrl = pigeonMap['redirectUrl'] as String?;
+      ..redirectUrl = pigeonMap['redirectUrl'] as String?
+      ..error = pigeonMap['error'] as String?;
   }
 }
 

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CcppPaymentResponse : NSObject
 @property(nonatomic, copy, nullable) NSString * responseCode;
 @property(nonatomic, copy, nullable) NSString * redirectUrl;
+@property(nonatomic, copy, nullable) NSString * error;
 @end
 
 @protocol CcppApi

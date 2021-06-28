@@ -64,10 +64,14 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
   if ((NSNull *)result.redirectUrl == [NSNull null]) {
     result.redirectUrl = nil;
   }
+  result.error = dict[@"error"];
+  if ((NSNull *)result.error == [NSNull null]) {
+    result.error = nil;
+  }
   return result;
 }
 -(NSDictionary*)toMap {
-  return [NSDictionary dictionaryWithObjectsAndKeys:(self.responseCode ? self.responseCode : [NSNull null]), @"responseCode", (self.redirectUrl ? self.redirectUrl : [NSNull null]), @"redirectUrl", nil];
+  return [NSDictionary dictionaryWithObjectsAndKeys:(self.responseCode ? self.responseCode : [NSNull null]), @"responseCode", (self.redirectUrl ? self.redirectUrl : [NSNull null]), @"redirectUrl", (self.error ? self.error : [NSNull null]), @"error", nil];
 }
 @end
 
