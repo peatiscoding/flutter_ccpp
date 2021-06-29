@@ -1,7 +1,7 @@
 name: flutter_ccpp
 description: A new flutter plugin project.
 version: 0.0.1
-homepage:
+homepage: https://github.com/peatiscoding/flutter_ccpp
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -21,10 +21,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-  # This section identifies this Flutter project as a plugin project.
-  # The 'pluginClass' and Android 'package' identifiers should not ordinarily
-  # be modified. They are used by the tooling to maintain consistency when
-  # adding or updating assets for this project.
   plugin:
     platforms:
       android:
