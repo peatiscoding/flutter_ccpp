@@ -3,12 +3,12 @@
 
 package me.peatiscoding.flutter_ccpp.pigeon;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.StandardMessageCodec;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /** Generated class from Pigeon. */
 @SuppressWarnings({"unused", "unchecked", "CodeBlock2Expr", "RedundantSuppression"})
@@ -41,6 +41,60 @@ public class Pigeon {
       fromMapResult.paymentToken = (String)paymentToken;
       Object cardToken = map.get("cardToken");
       fromMapResult.cardToken = (String)cardToken;
+      Object securityCode = map.get("securityCode");
+      fromMapResult.securityCode = (String)securityCode;
+      return fromMapResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class MakePanCreditCardPaymentInput {
+    private String panNumber;
+    public String getPanNumber() { return panNumber; }
+    public void setPanNumber(String setterArg) { this.panNumber = setterArg; }
+
+    private Long panExpiryMonth;
+    public Long getPanExpiryMonth() { return panExpiryMonth; }
+    public void setPanExpiryMonth(Long setterArg) { this.panExpiryMonth = setterArg; }
+
+    private Long panExpiryYear;
+    public Long getPanExpiryYear() { return panExpiryYear; }
+    public void setPanExpiryYear(Long setterArg) { this.panExpiryYear = setterArg; }
+
+    private Boolean tokenizeCard;
+    public Boolean getTokenizeCard() { return tokenizeCard; }
+    public void setTokenizeCard(Boolean setterArg) { this.tokenizeCard = setterArg; }
+
+    private String paymentToken;
+    public String getPaymentToken() { return paymentToken; }
+    public void setPaymentToken(String setterArg) { this.paymentToken = setterArg; }
+
+    private String securityCode;
+    public String getSecurityCode() { return securityCode; }
+    public void setSecurityCode(String setterArg) { this.securityCode = setterArg; }
+
+    Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("panNumber", panNumber);
+      toMapResult.put("panExpiryMonth", panExpiryMonth);
+      toMapResult.put("panExpiryYear", panExpiryYear);
+      toMapResult.put("tokenizeCard", tokenizeCard);
+      toMapResult.put("paymentToken", paymentToken);
+      toMapResult.put("securityCode", securityCode);
+      return toMapResult;
+    }
+    static MakePanCreditCardPaymentInput fromMap(Map<String, Object> map) {
+      MakePanCreditCardPaymentInput fromMapResult = new MakePanCreditCardPaymentInput();
+      Object panNumber = map.get("panNumber");
+      fromMapResult.panNumber = (String)panNumber;
+      Object panExpiryMonth = map.get("panExpiryMonth");
+      fromMapResult.panExpiryMonth = (panExpiryMonth == null) ? null : ((panExpiryMonth instanceof Integer) ? (Integer)panExpiryMonth : (Long)panExpiryMonth);
+      Object panExpiryYear = map.get("panExpiryYear");
+      fromMapResult.panExpiryYear = (panExpiryYear == null) ? null : ((panExpiryYear instanceof Integer) ? (Integer)panExpiryYear : (Long)panExpiryYear);
+      Object tokenizeCard = map.get("tokenizeCard");
+      fromMapResult.tokenizeCard = (Boolean)tokenizeCard;
+      Object paymentToken = map.get("paymentToken");
+      fromMapResult.paymentToken = (String)paymentToken;
       Object securityCode = map.get("securityCode");
       fromMapResult.securityCode = (String)securityCode;
       return fromMapResult;
@@ -89,6 +143,7 @@ public class Pigeon {
     void setupProduction();
     void setupSandbox();
     void makeTokenizedCreditCardPayment(MakeTokenizedCreditCardPaymentInput arg, Result<CcppPaymentResponse> result);
+    void makePanCreditCardPayment(MakePanCreditCardPaymentInput arg, Result<CcppPaymentResponse> result);
 
     /** Sets up an instance of `CcppApi` to handle messages through the `binaryMessenger`. */
     static void setup(BinaryMessenger binaryMessenger, CcppApi api) {
@@ -140,6 +195,26 @@ public class Pigeon {
               @SuppressWarnings("ConstantConditions")
               MakeTokenizedCreditCardPaymentInput input = MakeTokenizedCreditCardPaymentInput.fromMap((Map<String, Object>)message);
               api.makeTokenizedCreditCardPayment(input, result -> { wrapped.put("result", result.toMap()); reply.reply(wrapped); });
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.CcppApi.makePanCreditCardPayment", new StandardMessageCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              @SuppressWarnings("ConstantConditions")
+              MakePanCreditCardPaymentInput input = MakePanCreditCardPaymentInput.fromMap((Map<String, Object>)message);
+              api.makePanCreditCardPayment(input, result -> { wrapped.put("result", result.toMap()); reply.reply(wrapped); });
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));

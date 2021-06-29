@@ -36,4 +36,19 @@ class FlutterCcpp {
     }
     return resp;
   }
+
+  static Future<CcppPaymentResponse> makePanCreditCardPayment(String paymentToken, String panNumber, int panExpiryMonth, int panExpiryYear, String securityCode, bool tokenizeCard) async {
+    var req = MakePanCreditCardPaymentInput();
+    req.panNumber = panNumber;
+    req.panExpiryMonth = panExpiryMonth;
+    req.panExpiryYear = panExpiryYear;
+    req.tokenizeCard = tokenizeCard;
+    req.paymentToken = paymentToken;
+    req.securityCode = securityCode;
+    var resp = await _api.makePanCreditCardPayment(req);
+    if (resp.error != null) {
+      throw Exception(resp.error);
+    }
+    return resp;
+  }
 }

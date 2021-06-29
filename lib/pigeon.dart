@@ -29,6 +29,37 @@ class MakeTokenizedCreditCardPaymentInput {
   }
 }
 
+class MakePanCreditCardPaymentInput {
+  String? panNumber;
+  int? panExpiryMonth;
+  int? panExpiryYear;
+  bool? tokenizeCard;
+  String? paymentToken;
+  String? securityCode;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['panNumber'] = panNumber;
+    pigeonMap['panExpiryMonth'] = panExpiryMonth;
+    pigeonMap['panExpiryYear'] = panExpiryYear;
+    pigeonMap['tokenizeCard'] = tokenizeCard;
+    pigeonMap['paymentToken'] = paymentToken;
+    pigeonMap['securityCode'] = securityCode;
+    return pigeonMap;
+  }
+
+  static MakePanCreditCardPaymentInput decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return MakePanCreditCardPaymentInput()
+      ..panNumber = pigeonMap['panNumber'] as String?
+      ..panExpiryMonth = pigeonMap['panExpiryMonth'] as int?
+      ..panExpiryYear = pigeonMap['panExpiryYear'] as int?
+      ..tokenizeCard = pigeonMap['tokenizeCard'] as bool?
+      ..paymentToken = pigeonMap['paymentToken'] as String?
+      ..securityCode = pigeonMap['securityCode'] as String?;
+  }
+}
+
 class CcppPaymentResponse {
   String? responseCode;
   String? redirectUrl;
@@ -109,6 +140,30 @@ class CcppApi {
     final Object encoded = arg.encode();
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.CcppApi.makeTokenizedCreditCardPayment', const StandardMessageCodec(), binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(encoded) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+        details: null,
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else {
+      return CcppPaymentResponse.decode(replyMap['result']!);
+    }
+  }
+
+  Future<CcppPaymentResponse> makePanCreditCardPayment(MakePanCreditCardPaymentInput arg) async {
+    final Object encoded = arg.encode();
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.CcppApi.makePanCreditCardPayment', const StandardMessageCodec(), binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(encoded) as Map<Object?, Object?>?;
     if (replyMap == null) {

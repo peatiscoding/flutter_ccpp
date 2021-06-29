@@ -8,11 +8,21 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class MakeTokenizedCreditCardPaymentInput;
+@class MakePanCreditCardPaymentInput;
 @class CcppPaymentResponse;
 
 @interface MakeTokenizedCreditCardPaymentInput : NSObject
 @property(nonatomic, copy, nullable) NSString * paymentToken;
 @property(nonatomic, copy, nullable) NSString * cardToken;
+@property(nonatomic, copy, nullable) NSString * securityCode;
+@end
+
+@interface MakePanCreditCardPaymentInput : NSObject
+@property(nonatomic, copy, nullable) NSString * panNumber;
+@property(nonatomic, strong, nullable) NSNumber * panExpiryMonth;
+@property(nonatomic, strong, nullable) NSNumber * panExpiryYear;
+@property(nonatomic, strong, nullable) NSNumber * tokenizeCard;
+@property(nonatomic, copy, nullable) NSString * paymentToken;
 @property(nonatomic, copy, nullable) NSString * securityCode;
 @end
 
@@ -26,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)setupProduction:(FlutterError *_Nullable *_Nonnull)error;
 -(void)setupSandbox:(FlutterError *_Nullable *_Nonnull)error;
 -(void)makeTokenizedCreditCardPayment:(nullable MakeTokenizedCreditCardPaymentInput *)input completion:(void(^)(CcppPaymentResponse *_Nullable, FlutterError *_Nullable))completion;
+-(void)makePanCreditCardPayment:(nullable MakePanCreditCardPaymentInput *)input completion:(void(^)(CcppPaymentResponse *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void CcppApiSetup(id<FlutterBinaryMessenger> binaryMessenger, id<CcppApi> _Nullable api);

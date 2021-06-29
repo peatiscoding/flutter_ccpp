@@ -32,11 +32,17 @@ class _MyAppState extends State<MyApp> {
       FlutterCcpp.setup(CcppEnvironment.sandbox);
       platformVersion = 'Initialized';
       // Try make a new payment!
-      var payment = await FlutterCcpp.makeTokenizedCreditCardPayment(
-        "roZG9I1hk/GYjNt+BYPYbxQtKElbZDs9M5cXuEbE+Z0QTr/yUcl1oG7t0AGoOJlBhzeyBtf5mQi1UqGbjC66E85S4m63CfV/awwNbbLbkxsvfgzn0KSv7JzH3gcs/OIL",
-        "20052010380915759367",
-        "123"
+      var payment = await FlutterCcpp.makePanCreditCardPayment(
+        "kSAops9Zwhos8hSTSeLTUa+y/Hc8FJ1w4/jAGUqhUcMU6mDXSirHZjqtn/wEgJi1w3nONLuU7kSTUYkknSfwRwNsxt7JB+kB+HYMCu5KbquzbbvRgzQEj455GM01dz8e",
+        "4111111111111111",
+        2,
+        2022,
+        "123",
+        true
       );
+      print(payment.responseCode);
+      print(payment.redirectUrl);
+      print(payment.error);
     } catch(e) {
       platformVersion = e.toString();
     }

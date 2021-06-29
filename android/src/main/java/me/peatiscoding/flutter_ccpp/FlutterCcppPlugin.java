@@ -2,6 +2,7 @@ package me.peatiscoding.flutter_ccpp;
 
 import android.content.Context;
 
+import com.ccpp.pgw.sdk.android.builder.CardPaymentBuilder;
 import com.ccpp.pgw.sdk.android.builder.CardTokenPaymentBuilder;
 import com.ccpp.pgw.sdk.android.builder.PGWSDKParamsBuilder;
 import com.ccpp.pgw.sdk.android.builder.TransactionResultRequestBuilder;
@@ -60,9 +61,31 @@ public class FlutterCcppPlugin implements Pigeon.CcppApi, FlutterPlugin {
     TransactionResultRequest transactionResultRequest = new TransactionResultRequestBuilder(arg.getPaymentToken())
             .with(paymentRequest)
             .build();
+    this.makePayment(transactionResultRequest, result);
+  }
 
+  @Override
+  public void makePanCreditCardPayment(Pigeon.MakePanCreditCardPaymentInput arg, Pigeon.Result<Pigeon.CcppPaymentResponse> result) {
+    // Step 3: Construct credit card request.
+    PaymentCode paymentCode = new PaymentCode("CC");
+
+    PaymentRequest paymentRequest = new CardPaymentBuilder(paymentCode, arg.getPanNumber())
+            .setExpiryMonth(Math.toIntExact(arg.getPanExpiryMonth()))
+            .setExpiryYear(Math.toIntExact(arg.getPanExpiryYear()))
+            .setSecurityCode(arg.getSecurityCode())
+            .setTokenize(arg.getTokenizeCard())
+            .build();
+
+    // Step 4: Construct transaction request.
+    TransactionResultRequest transactionResultRequest = new TransactionResultRequestBuilder(arg.getPaymentToken())
+            .with(paymentRequest)
+            .build();
+    this.makePayment(transactionResultRequest, result);
+  }
+
+  private void makePayment(TransactionResultRequest request, Pigeon.Result<Pigeon.CcppPaymentResponse> result) {
     // Step 5: Execute payment request.
-    PGWSDK.getInstance().proceedTransaction(transactionResultRequest, new APIResponseCallback<TransactionResultResponse>() {
+    PGWSDK.getInstance().proceedTransaction(request, new APIResponseCallback<TransactionResultResponse>() {
 
       @Override
       public void onResponse(TransactionResultResponse response) {

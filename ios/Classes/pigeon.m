@@ -26,6 +26,10 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
 +(MakeTokenizedCreditCardPaymentInput*)fromMap:(NSDictionary*)dict;
 -(NSDictionary*)toMap;
 @end
+@interface MakePanCreditCardPaymentInput ()
++(MakePanCreditCardPaymentInput*)fromMap:(NSDictionary*)dict;
+-(NSDictionary*)toMap;
+@end
 @interface CcppPaymentResponse ()
 +(CcppPaymentResponse*)fromMap:(NSDictionary*)dict;
 -(NSDictionary*)toMap;
@@ -50,6 +54,40 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
 }
 -(NSDictionary*)toMap {
   return [NSDictionary dictionaryWithObjectsAndKeys:(self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.cardToken ? self.cardToken : [NSNull null]), @"cardToken", (self.securityCode ? self.securityCode : [NSNull null]), @"securityCode", nil];
+}
+@end
+
+@implementation MakePanCreditCardPaymentInput
++(MakePanCreditCardPaymentInput*)fromMap:(NSDictionary*)dict {
+  MakePanCreditCardPaymentInput* result = [[MakePanCreditCardPaymentInput alloc] init];
+  result.panNumber = dict[@"panNumber"];
+  if ((NSNull *)result.panNumber == [NSNull null]) {
+    result.panNumber = nil;
+  }
+  result.panExpiryMonth = dict[@"panExpiryMonth"];
+  if ((NSNull *)result.panExpiryMonth == [NSNull null]) {
+    result.panExpiryMonth = nil;
+  }
+  result.panExpiryYear = dict[@"panExpiryYear"];
+  if ((NSNull *)result.panExpiryYear == [NSNull null]) {
+    result.panExpiryYear = nil;
+  }
+  result.tokenizeCard = dict[@"tokenizeCard"];
+  if ((NSNull *)result.tokenizeCard == [NSNull null]) {
+    result.tokenizeCard = nil;
+  }
+  result.paymentToken = dict[@"paymentToken"];
+  if ((NSNull *)result.paymentToken == [NSNull null]) {
+    result.paymentToken = nil;
+  }
+  result.securityCode = dict[@"securityCode"];
+  if ((NSNull *)result.securityCode == [NSNull null]) {
+    result.securityCode = nil;
+  }
+  return result;
+}
+-(NSDictionary*)toMap {
+  return [NSDictionary dictionaryWithObjectsAndKeys:(self.panNumber ? self.panNumber : [NSNull null]), @"panNumber", (self.panExpiryMonth ? self.panExpiryMonth : [NSNull null]), @"panExpiryMonth", (self.panExpiryYear ? self.panExpiryYear : [NSNull null]), @"panExpiryYear", (self.tokenizeCard ? self.tokenizeCard : [NSNull null]), @"tokenizeCard", (self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.securityCode ? self.securityCode : [NSNull null]), @"securityCode", nil];
 }
 @end
 
@@ -117,6 +155,23 @@ void CcppApiSetup(id<FlutterBinaryMessenger> binaryMessenger, id<CcppApi> api) {
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         MakeTokenizedCreditCardPaymentInput *input = [MakeTokenizedCreditCardPaymentInput fromMap:message];
         [api makeTokenizedCreditCardPayment:input completion:^(CcppPaymentResponse *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult([output toMap], error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [FlutterBasicMessageChannel
+        messageChannelWithName:@"dev.flutter.pigeon.CcppApi.makePanCreditCardPayment"
+        binaryMessenger:binaryMessenger];
+    if (api) {
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        MakePanCreditCardPaymentInput *input = [MakePanCreditCardPaymentInput fromMap:message];
+        [api makePanCreditCardPayment:input completion:^(CcppPaymentResponse *_Nullable output, FlutterError *_Nullable error) {
           callback(wrapResult([output toMap], error));
         }];
       }];
