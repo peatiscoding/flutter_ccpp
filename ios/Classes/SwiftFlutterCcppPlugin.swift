@@ -74,7 +74,6 @@ public class SwiftFlutterCcppPlugin: NSObject, FlutterPlugin, CcppApi {
              } else if response.responseCode == APIResponseCode.TransactionCompleted {
                 let res = CcppPaymentResponse()
                 res.responseCode = response.responseCode
-                
                 // Inquiry payment result by using invoice no.
                 completion(res, nil)
              } else {
