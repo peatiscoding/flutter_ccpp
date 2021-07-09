@@ -216,10 +216,18 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
   if ((NSNull *)result.error == [NSNull null]) {
     result.error = nil;
   }
+  result.type = dict[@"type"];
+  if ((NSNull *)result.type == [NSNull null]) {
+    result.type = nil;
+  }
+  result.data = dict[@"data"];
+  if ((NSNull *)result.data == [NSNull null]) {
+    result.data = nil;
+  }
   return result;
 }
 -(NSDictionary*)toMap {
-  return [NSDictionary dictionaryWithObjectsAndKeys:(self.responseCode ? self.responseCode : [NSNull null]), @"responseCode", (self.redirectUrl ? self.redirectUrl : [NSNull null]), @"redirectUrl", (self.error ? self.error : [NSNull null]), @"error", nil];
+  return [NSDictionary dictionaryWithObjectsAndKeys:(self.responseCode ? self.responseCode : [NSNull null]), @"responseCode", (self.redirectUrl ? self.redirectUrl : [NSNull null]), @"redirectUrl", (self.error ? self.error : [NSNull null]), @"error", (self.type ? self.type : [NSNull null]), @"type", (self.data ? self.data : [NSNull null]), @"data", nil];
 }
 @end
 

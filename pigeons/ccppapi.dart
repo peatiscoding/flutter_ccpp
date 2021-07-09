@@ -49,6 +49,10 @@ class CcppPaymentResponse {
   String? responseCode;
   String? redirectUrl;
   String? error;
+
+  // Only valid for QRPayment
+  String? type; // Response Type
+  String? data; // For Result 
 }
 
 @HostApi()

@@ -160,9 +160,11 @@ public class FlutterCcppPlugin implements Pigeon.CcppApi, FlutterPlugin {
 
         Pigeon.CcppPaymentResponse resp = new Pigeon.CcppPaymentResponse();
         resp.setResponseCode(response.getResponseCode());
-        if(response.getResponseCode().equals(APIResponseCode.TransactionAuthenticateRedirect) || response.getResponseCode().equals(APIResponseCode.TransactionAuthenticateFullRedirect)) {
+        if(response.getResponseCode().equals(APIResponseCode.TransactionAuthenticateRedirect) || response.getResponseCode().equals(APIResponseCode.TransactionAuthenticateFullRedirect) || response.getResponseCode().equals(APIResponseCode.APISuccess) || response.getResponseCode().equals(APIResponseCode.TransactionInProgress) || response.getResponseCode().equals(APIResponseCode.TransactionQRPayment)) {
           String redirectUrl = response.getData(); //Open WebView
           resp.setRedirectUrl(redirectUrl);
+          resp.setData(response.getData());
+          resp.setType(response.getType());
         } else if(!response.getResponseCode().equals(APIResponseCode.TransactionCompleted)) {
           //Get error response and display error.
           // Work around while waiting for Pigeon to fix Error report mechanic.

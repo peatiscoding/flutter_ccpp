@@ -59,6 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString * responseCode;
 @property(nonatomic, copy, nullable) NSString * redirectUrl;
 @property(nonatomic, copy, nullable) NSString * error;
+@property(nonatomic, copy, nullable) NSString * type;
+@property(nonatomic, copy, nullable) NSString * data;
 @end
 
 @protocol CcppApi

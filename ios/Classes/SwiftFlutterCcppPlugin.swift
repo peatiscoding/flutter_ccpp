@@ -149,11 +149,13 @@ public class SwiftFlutterCcppPlugin: NSObject, FlutterPlugin, CcppApi {
     
     private func makePayment(request: TransactionResultRequest, completion: @escaping (CcppPaymentResponse?, FlutterError?) -> Void) {
         PGWSDK.shared.proceedTransaction(transactionResultRequest: request, { (response: TransactionResultResponse) in
-             if response.responseCode == APIResponseCode.TransactionAuthenticateRedirect || response.responseCode == APIResponseCode.TransactionAuthenticateFullRedirect {
+            if response.responseCode == APIResponseCode.TransactionAuthenticateRedirect || response.responseCode == APIResponseCode.TransactionAuthenticateFullRedirect || response.responseCode == APIResponseCode.TransactionQRPayment || response.responseCode == APIResponseCode.APISuccess || response.responseCode == APIResponseCode.TransactionInProgress {
                    guard let redirectUrl: String = response.data else { return } //Open WebView
                 let res = CcppPaymentResponse()
                 res.redirectUrl = redirectUrl
                 res.responseCode = response.responseCode
+                res.data = response.data
+                res.type = response.type
                 completion(res, nil)
              } else if response.responseCode == APIResponseCode.TransactionCompleted {
                 let res = CcppPaymentResponse()

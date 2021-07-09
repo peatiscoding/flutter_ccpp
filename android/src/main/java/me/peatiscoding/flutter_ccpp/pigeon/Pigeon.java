@@ -3,12 +3,12 @@
 
 package me.peatiscoding.flutter_ccpp.pigeon;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.StandardMessageCodec;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /** Generated class from Pigeon. */
 @SuppressWarnings({"unused", "unchecked", "CodeBlock2Expr", "RedundantSuppression"})
@@ -270,11 +270,21 @@ public class Pigeon {
     public String getError() { return error; }
     public void setError(String setterArg) { this.error = setterArg; }
 
+    private String type;
+    public String getType() { return type; }
+    public void setType(String setterArg) { this.type = setterArg; }
+
+    private String data;
+    public String getData() { return data; }
+    public void setData(String setterArg) { this.data = setterArg; }
+
     Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
       toMapResult.put("responseCode", responseCode);
       toMapResult.put("redirectUrl", redirectUrl);
       toMapResult.put("error", error);
+      toMapResult.put("type", type);
+      toMapResult.put("data", data);
       return toMapResult;
     }
     static CcppPaymentResponse fromMap(Map<String, Object> map) {
@@ -285,6 +295,10 @@ public class Pigeon {
       fromMapResult.redirectUrl = (String)redirectUrl;
       Object error = map.get("error");
       fromMapResult.error = (String)error;
+      Object type = map.get("type");
+      fromMapResult.type = (String)type;
+      Object data = map.get("data");
+      fromMapResult.data = (String)data;
       return fromMapResult;
     }
   }

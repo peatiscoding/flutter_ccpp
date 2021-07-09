@@ -154,12 +154,16 @@ class CcppPaymentResponse {
   String? responseCode;
   String? redirectUrl;
   String? error;
+  String? type;
+  String? data;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['responseCode'] = responseCode;
     pigeonMap['redirectUrl'] = redirectUrl;
     pigeonMap['error'] = error;
+    pigeonMap['type'] = type;
+    pigeonMap['data'] = data;
     return pigeonMap;
   }
 
@@ -168,7 +172,9 @@ class CcppPaymentResponse {
     return CcppPaymentResponse()
       ..responseCode = pigeonMap['responseCode'] as String?
       ..redirectUrl = pigeonMap['redirectUrl'] as String?
-      ..error = pigeonMap['error'] as String?;
+      ..error = pigeonMap['error'] as String?
+      ..type = pigeonMap['type'] as String?
+      ..data = pigeonMap['data'] as String?;
   }
 }
 
