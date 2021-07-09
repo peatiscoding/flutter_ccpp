@@ -30,6 +30,18 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
 +(MakePanCreditCardPaymentInput*)fromMap:(NSDictionary*)dict;
 -(NSDictionary*)toMap;
 @end
+@interface MakePanCreditCardInstallmentPaymentInput ()
++(MakePanCreditCardInstallmentPaymentInput*)fromMap:(NSDictionary*)dict;
+-(NSDictionary*)toMap;
+@end
+@interface MakeTokenizedCreditCardInstallmentPaymentInput ()
++(MakeTokenizedCreditCardInstallmentPaymentInput*)fromMap:(NSDictionary*)dict;
+-(NSDictionary*)toMap;
+@end
+@interface MakeQRPaymentInput ()
++(MakeQRPaymentInput*)fromMap:(NSDictionary*)dict;
+-(NSDictionary*)toMap;
+@end
 @interface CcppPaymentResponse ()
 +(CcppPaymentResponse*)fromMap:(NSDictionary*)dict;
 -(NSDictionary*)toMap;
@@ -88,6 +100,104 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
 }
 -(NSDictionary*)toMap {
   return [NSDictionary dictionaryWithObjectsAndKeys:(self.panNumber ? self.panNumber : [NSNull null]), @"panNumber", (self.panExpiryMonth ? self.panExpiryMonth : [NSNull null]), @"panExpiryMonth", (self.panExpiryYear ? self.panExpiryYear : [NSNull null]), @"panExpiryYear", (self.tokenizeCard ? self.tokenizeCard : [NSNull null]), @"tokenizeCard", (self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.securityCode ? self.securityCode : [NSNull null]), @"securityCode", nil];
+}
+@end
+
+@implementation MakePanCreditCardInstallmentPaymentInput
++(MakePanCreditCardInstallmentPaymentInput*)fromMap:(NSDictionary*)dict {
+  MakePanCreditCardInstallmentPaymentInput* result = [[MakePanCreditCardInstallmentPaymentInput alloc] init];
+  result.panNumber = dict[@"panNumber"];
+  if ((NSNull *)result.panNumber == [NSNull null]) {
+    result.panNumber = nil;
+  }
+  result.panExpiryMonth = dict[@"panExpiryMonth"];
+  if ((NSNull *)result.panExpiryMonth == [NSNull null]) {
+    result.panExpiryMonth = nil;
+  }
+  result.panExpiryYear = dict[@"panExpiryYear"];
+  if ((NSNull *)result.panExpiryYear == [NSNull null]) {
+    result.panExpiryYear = nil;
+  }
+  result.paymentToken = dict[@"paymentToken"];
+  if ((NSNull *)result.paymentToken == [NSNull null]) {
+    result.paymentToken = nil;
+  }
+  result.securityCode = dict[@"securityCode"];
+  if ((NSNull *)result.securityCode == [NSNull null]) {
+    result.securityCode = nil;
+  }
+  result.period = dict[@"period"];
+  if ((NSNull *)result.period == [NSNull null]) {
+    result.period = nil;
+  }
+  result.paidByCustomer = dict[@"paidByCustomer"];
+  if ((NSNull *)result.paidByCustomer == [NSNull null]) {
+    result.paidByCustomer = nil;
+  }
+  return result;
+}
+-(NSDictionary*)toMap {
+  return [NSDictionary dictionaryWithObjectsAndKeys:(self.panNumber ? self.panNumber : [NSNull null]), @"panNumber", (self.panExpiryMonth ? self.panExpiryMonth : [NSNull null]), @"panExpiryMonth", (self.panExpiryYear ? self.panExpiryYear : [NSNull null]), @"panExpiryYear", (self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.securityCode ? self.securityCode : [NSNull null]), @"securityCode", (self.period ? self.period : [NSNull null]), @"period", (self.paidByCustomer ? self.paidByCustomer : [NSNull null]), @"paidByCustomer", nil];
+}
+@end
+
+@implementation MakeTokenizedCreditCardInstallmentPaymentInput
++(MakeTokenizedCreditCardInstallmentPaymentInput*)fromMap:(NSDictionary*)dict {
+  MakeTokenizedCreditCardInstallmentPaymentInput* result = [[MakeTokenizedCreditCardInstallmentPaymentInput alloc] init];
+  result.paymentToken = dict[@"paymentToken"];
+  if ((NSNull *)result.paymentToken == [NSNull null]) {
+    result.paymentToken = nil;
+  }
+  result.cardToken = dict[@"cardToken"];
+  if ((NSNull *)result.cardToken == [NSNull null]) {
+    result.cardToken = nil;
+  }
+  result.securityCode = dict[@"securityCode"];
+  if ((NSNull *)result.securityCode == [NSNull null]) {
+    result.securityCode = nil;
+  }
+  result.period = dict[@"period"];
+  if ((NSNull *)result.period == [NSNull null]) {
+    result.period = nil;
+  }
+  result.paidByCustomer = dict[@"paidByCustomer"];
+  if ((NSNull *)result.paidByCustomer == [NSNull null]) {
+    result.paidByCustomer = nil;
+  }
+  return result;
+}
+-(NSDictionary*)toMap {
+  return [NSDictionary dictionaryWithObjectsAndKeys:(self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.cardToken ? self.cardToken : [NSNull null]), @"cardToken", (self.securityCode ? self.securityCode : [NSNull null]), @"securityCode", (self.period ? self.period : [NSNull null]), @"period", (self.paidByCustomer ? self.paidByCustomer : [NSNull null]), @"paidByCustomer", nil];
+}
+@end
+
+@implementation MakeQRPaymentInput
++(MakeQRPaymentInput*)fromMap:(NSDictionary*)dict {
+  MakeQRPaymentInput* result = [[MakeQRPaymentInput alloc] init];
+  result.paymentToken = dict[@"paymentToken"];
+  if ((NSNull *)result.paymentToken == [NSNull null]) {
+    result.paymentToken = nil;
+  }
+  result.name = dict[@"name"];
+  if ((NSNull *)result.name == [NSNull null]) {
+    result.name = nil;
+  }
+  result.email = dict[@"email"];
+  if ((NSNull *)result.email == [NSNull null]) {
+    result.email = nil;
+  }
+  result.mobileNumber = dict[@"mobileNumber"];
+  if ((NSNull *)result.mobileNumber == [NSNull null]) {
+    result.mobileNumber = nil;
+  }
+  result.qrCodeType = dict[@"qrCodeType"];
+  if ((NSNull *)result.qrCodeType == [NSNull null]) {
+    result.qrCodeType = nil;
+  }
+  return result;
+}
+-(NSDictionary*)toMap {
+  return [NSDictionary dictionaryWithObjectsAndKeys:(self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.name ? self.name : [NSNull null]), @"name", (self.email ? self.email : [NSNull null]), @"email", (self.mobileNumber ? self.mobileNumber : [NSNull null]), @"mobileNumber", (self.qrCodeType ? self.qrCodeType : [NSNull null]), @"qrCodeType", nil];
 }
 @end
 
@@ -172,6 +282,57 @@ void CcppApiSetup(id<FlutterBinaryMessenger> binaryMessenger, id<CcppApi> api) {
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         MakePanCreditCardPaymentInput *input = [MakePanCreditCardPaymentInput fromMap:message];
         [api makePanCreditCardPayment:input completion:^(CcppPaymentResponse *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult([output toMap], error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [FlutterBasicMessageChannel
+        messageChannelWithName:@"dev.flutter.pigeon.CcppApi.makePanCreditCardInstallmentPayment"
+        binaryMessenger:binaryMessenger];
+    if (api) {
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        MakePanCreditCardInstallmentPaymentInput *input = [MakePanCreditCardInstallmentPaymentInput fromMap:message];
+        [api makePanCreditCardInstallmentPayment:input completion:^(CcppPaymentResponse *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult([output toMap], error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [FlutterBasicMessageChannel
+        messageChannelWithName:@"dev.flutter.pigeon.CcppApi.makeTokenizedCreditCardInstallmentPayment"
+        binaryMessenger:binaryMessenger];
+    if (api) {
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        MakeTokenizedCreditCardInstallmentPaymentInput *input = [MakeTokenizedCreditCardInstallmentPaymentInput fromMap:message];
+        [api makeTokenizedCreditCardInstallmentPayment:input completion:^(CcppPaymentResponse *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult([output toMap], error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [FlutterBasicMessageChannel
+        messageChannelWithName:@"dev.flutter.pigeon.CcppApi.makeQRPayment"
+        binaryMessenger:binaryMessenger];
+    if (api) {
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        MakeQRPaymentInput *input = [MakeQRPaymentInput fromMap:message];
+        [api makeQRPayment:input completion:^(CcppPaymentResponse *_Nullable output, FlutterError *_Nullable error) {
           callback(wrapResult([output toMap], error));
         }];
       }];

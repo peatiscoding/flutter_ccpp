@@ -44,6 +44,32 @@ public class SwiftFlutterCcppPlugin: NSObject, FlutterPlugin, CcppApi {
     
         self.makePayment(request: transactionResultRequest, completion: completion)
     }
+
+    public func makePanCreditCardInstallmentPayment(_ input: MakePanCreditCardInstallmentPaymentInput?, completion: @escaping (CcppPaymentResponse?, FlutterError?) -> Void) {
+        guard let panNumber = input?.panNumber,
+              let panExpiryMonth = input?.panExpiryMonth,
+              let panExpiryYear = input?.panExpiryYear,
+              let paymentToken = input?.paymentToken,
+              let securityCode = input?.securityCode,
+              let iPaidByCustomer = input?.paidByCustomer,
+              let iPeriod = input?.period else {
+            fatalError("Invalid request")
+        }
+        let paymentCode: PaymentCode = PaymentCode(channelCode: "IPP")
+        let paidByCustomer: Bool = Bool(truncating: iPaidByCustomer)
+        let paymentRequest: PaymentRequest = CardPaymentBuilder(paymentCode: paymentCode, panNumber)
+            .expiryMonth(Int(truncating: panExpiryMonth))
+            .expiryYear(Int(truncating: panExpiryYear))
+            .securityCode(securityCode)
+            .installmentInterestType(paidByCustomer ? InstallmentInterestTypeCode.Customer : InstallmentInterestTypeCode.Merchant)
+            .installmentPeriod(Int(truncating: iPeriod))
+            .build()
+        let transactionResultRequest: TransactionResultRequest = TransactionResultRequestBuilder(paymentToken: paymentToken)
+            .with(paymentRequest)
+            .build()
+    
+        self.makePayment(request: transactionResultRequest, completion: completion)
+    }
     
     public func makeTokenizedCreditCardPayment(_ input: MakeTokenizedCreditCardPaymentInput?, completion: @escaping (CcppPaymentResponse?, FlutterError?) -> Void) {
         guard let cardToken = input?.cardToken,
@@ -61,6 +87,64 @@ public class SwiftFlutterCcppPlugin: NSObject, FlutterPlugin, CcppApi {
             .build()
     
         self.makePayment(request: transactionResultRequest, completion: completion)
+    }
+    
+    public func makeTokenizedCreditCardInstallmentPayment(_ input: MakeTokenizedCreditCardInstallmentPaymentInput?, completion: @escaping (CcppPaymentResponse?, FlutterError?) -> Void) {
+        guard let cardToken = input?.cardToken,
+              let paymentToken = input?.paymentToken,
+              let iPaidByCustomer = input?.paidByCustomer,
+              let iPeriod = input?.period,
+              let securityCode = input?.securityCode else {
+            fatalError("Invalid request")
+        }
+        let paymentCode: PaymentCode = PaymentCode(channelCode: "IPP")
+        let paidByCustomer: Bool = Bool(truncating: iPaidByCustomer)
+         
+        let paymentRequest: PaymentRequest = CardTokenPaymentBuilder(paymentCode: paymentCode, cardToken)
+            .securityCode(securityCode)
+            .installmentInterestType(paidByCustomer ? InstallmentInterestTypeCode.Customer : InstallmentInterestTypeCode.Merchant)
+            .installmentPeriod(Int(truncating: iPeriod))
+            .build()
+        let transactionResultRequest: TransactionResultRequest = TransactionResultRequestBuilder(paymentToken: paymentToken)
+            .with(paymentRequest)
+            .build()
+    
+        self.makePayment(request: transactionResultRequest, completion: completion)
+    }
+    
+    public func makeQRPayment(_ input: MakeQRPaymentInput?, completion: @escaping (CcppPaymentResponse?, FlutterError?) -> Void) {
+        guard let email = input?.email,
+              let qrCodeType = input?.qrCodeType,
+              let paymentToken = input?.paymentToken,
+              let mobileNumber = input?.mobileNumber,
+              let name = input?.name else {
+            fatalError("Invalid request")
+        }
+        let paymentCode: PaymentCode = PaymentCode(channelCode: "VEMVQR")
+        if qrCodeType == "raw" {
+            
+        }
+         
+        let paymentRequest: PaymentRequest = QRPaymentBuilder(paymentCode: paymentCode)
+            .type(makeQrType(qrCodeType))
+            .name(name)
+            .email(email)
+            .mobileNo(mobileNumber)
+            .build()
+        let transactionResultRequest: TransactionResultRequest = TransactionResultRequestBuilder(paymentToken: paymentToken)
+            .with(paymentRequest)
+            .build()
+    
+        self.makePayment(request: transactionResultRequest, completion: completion)
+    }
+    
+    private func makeQrType(_ type: String) -> String {
+        if type == "raw" {
+            return QRTypeCode.Raw
+        } else if type == "base64" {
+            return QRTypeCode.Base64
+        }
+        return QRTypeCode.URL
     }
     
     private func makePayment(request: TransactionResultRequest, completion: @escaping (CcppPaymentResponse?, FlutterError?) -> Void) {

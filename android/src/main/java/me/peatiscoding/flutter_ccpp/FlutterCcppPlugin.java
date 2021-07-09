@@ -5,11 +5,14 @@ import android.content.Context;
 import com.ccpp.pgw.sdk.android.builder.CardPaymentBuilder;
 import com.ccpp.pgw.sdk.android.builder.CardTokenPaymentBuilder;
 import com.ccpp.pgw.sdk.android.builder.PGWSDKParamsBuilder;
+import com.ccpp.pgw.sdk.android.builder.QRPaymentBuilder;
 import com.ccpp.pgw.sdk.android.builder.TransactionResultRequestBuilder;
 import com.ccpp.pgw.sdk.android.callback.APIResponseCallback;
 import com.ccpp.pgw.sdk.android.core.PGWSDK;
 import com.ccpp.pgw.sdk.android.enums.APIEnvironment;
 import com.ccpp.pgw.sdk.android.enums.APIResponseCode;
+import com.ccpp.pgw.sdk.android.enums.InstallmentInterestTypeCode;
+import com.ccpp.pgw.sdk.android.enums.QRTypeCode;
 import com.ccpp.pgw.sdk.android.model.PaymentCode;
 import com.ccpp.pgw.sdk.android.model.PaymentRequest;
 import com.ccpp.pgw.sdk.android.model.api.TransactionResultRequest;
@@ -64,6 +67,23 @@ public class FlutterCcppPlugin implements Pigeon.CcppApi, FlutterPlugin {
     this.makePayment(transactionResultRequest, result);
   }
 
+  public void makeTokenizedCreditCardInstallmentPayment(Pigeon.MakeTokenizedCreditCardInstallmentPaymentInput arg, Pigeon.Result<Pigeon.CcppPaymentResponse> result) {
+    // Step 3: Construct credit card request.
+    PaymentCode paymentCode = new PaymentCode("IPP");
+
+    PaymentRequest paymentRequest = new CardTokenPaymentBuilder(paymentCode, arg.getCardToken())
+            .setSecurityCode(arg.getSecurityCode())
+            .setInstallmentInterestType(arg.getPaidByCustomer() ? InstallmentInterestTypeCode.Customer : InstallmentInterestTypeCode.Merchant)
+            .setInstallmentPeriod(Math.toIntExact(arg.getPeriod()))
+            .build();
+
+    // Step 4: Construct transaction request.
+    TransactionResultRequest transactionResultRequest = new TransactionResultRequestBuilder(arg.getPaymentToken())
+            .with(paymentRequest)
+            .build();
+    this.makePayment(transactionResultRequest, result);
+  }
+
   @Override
   public void makePanCreditCardPayment(Pigeon.MakePanCreditCardPaymentInput arg, Pigeon.Result<Pigeon.CcppPaymentResponse> result) {
     // Step 3: Construct credit card request.
@@ -81,6 +101,54 @@ public class FlutterCcppPlugin implements Pigeon.CcppApi, FlutterPlugin {
             .with(paymentRequest)
             .build();
     this.makePayment(transactionResultRequest, result);
+  }
+
+  @Override
+  public void makePanCreditCardInstallmentPayment(Pigeon.MakePanCreditCardInstallmentPaymentInput arg, Pigeon.Result<Pigeon.CcppPaymentResponse> result) {
+    // Step 3: Construct credit card request.
+    PaymentCode paymentCode = new PaymentCode("IPP");
+
+    PaymentRequest paymentRequest = new CardPaymentBuilder(paymentCode, arg.getPanNumber())
+            .setExpiryMonth(Math.toIntExact(arg.getPanExpiryMonth()))
+            .setExpiryYear(Math.toIntExact(arg.getPanExpiryYear()))
+            .setSecurityCode(arg.getSecurityCode())
+            .setInstallmentInterestType(arg.getPaidByCustomer() ? InstallmentInterestTypeCode.Customer : InstallmentInterestTypeCode.Merchant)
+            .setInstallmentPeriod(Math.toIntExact(arg.getPeriod()))
+            .build();
+
+    // Step 4: Construct transaction request.
+    TransactionResultRequest transactionResultRequest = new TransactionResultRequestBuilder(arg.getPaymentToken())
+            .with(paymentRequest)
+            .build();
+    this.makePayment(transactionResultRequest, result);
+  }
+
+  @Override
+  public void makeQRPayment(Pigeon.MakeQRPaymentInput arg, Pigeon.Result<Pigeon.CcppPaymentResponse> result) {
+    // Step 3: Construct credit card request.
+    PaymentCode paymentCode = new PaymentCode("VEMVQR");
+
+    PaymentRequest paymentRequest = new QRPaymentBuilder(paymentCode)
+            .setType(makeQRCodeType(arg.getQrCodeType()))
+            .setName(arg.getName())
+            .setMobileNo(arg.getMobileNumber())
+            .setEmail(arg.getEmail())
+            .build();
+
+    // Step 4: Construct transaction request.
+    TransactionResultRequest transactionResultRequest = new TransactionResultRequestBuilder(arg.getPaymentToken())
+            .with(paymentRequest)
+            .build();
+    this.makePayment(transactionResultRequest, result);
+  }
+
+  private String makeQRCodeType(String pigeonRawValue) {
+    if ("raw".equals(pigeonRawValue)) {
+      return QRTypeCode.Raw;
+    } else if ("base64".equals(pigeonRawValue)) {
+      return QRTypeCode.Base64;
+    }
+    return QRTypeCode.URL;
   }
 
   private void makePayment(TransactionResultRequest request, Pigeon.Result<Pigeon.CcppPaymentResponse> result) {

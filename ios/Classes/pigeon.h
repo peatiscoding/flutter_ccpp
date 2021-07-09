@@ -9,6 +9,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class MakeTokenizedCreditCardPaymentInput;
 @class MakePanCreditCardPaymentInput;
+@class MakePanCreditCardInstallmentPaymentInput;
+@class MakeTokenizedCreditCardInstallmentPaymentInput;
+@class MakeQRPaymentInput;
 @class CcppPaymentResponse;
 
 @interface MakeTokenizedCreditCardPaymentInput : NSObject
@@ -26,6 +29,32 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString * securityCode;
 @end
 
+@interface MakePanCreditCardInstallmentPaymentInput : NSObject
+@property(nonatomic, copy, nullable) NSString * panNumber;
+@property(nonatomic, strong, nullable) NSNumber * panExpiryMonth;
+@property(nonatomic, strong, nullable) NSNumber * panExpiryYear;
+@property(nonatomic, copy, nullable) NSString * paymentToken;
+@property(nonatomic, copy, nullable) NSString * securityCode;
+@property(nonatomic, strong, nullable) NSNumber * period;
+@property(nonatomic, strong, nullable) NSNumber * paidByCustomer;
+@end
+
+@interface MakeTokenizedCreditCardInstallmentPaymentInput : NSObject
+@property(nonatomic, copy, nullable) NSString * paymentToken;
+@property(nonatomic, copy, nullable) NSString * cardToken;
+@property(nonatomic, copy, nullable) NSString * securityCode;
+@property(nonatomic, strong, nullable) NSNumber * period;
+@property(nonatomic, strong, nullable) NSNumber * paidByCustomer;
+@end
+
+@interface MakeQRPaymentInput : NSObject
+@property(nonatomic, copy, nullable) NSString * paymentToken;
+@property(nonatomic, copy, nullable) NSString * name;
+@property(nonatomic, copy, nullable) NSString * email;
+@property(nonatomic, copy, nullable) NSString * mobileNumber;
+@property(nonatomic, copy, nullable) NSString * qrCodeType;
+@end
+
 @interface CcppPaymentResponse : NSObject
 @property(nonatomic, copy, nullable) NSString * responseCode;
 @property(nonatomic, copy, nullable) NSString * redirectUrl;
@@ -37,6 +66,9 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)setupSandbox:(FlutterError *_Nullable *_Nonnull)error;
 -(void)makeTokenizedCreditCardPayment:(nullable MakeTokenizedCreditCardPaymentInput *)input completion:(void(^)(CcppPaymentResponse *_Nullable, FlutterError *_Nullable))completion;
 -(void)makePanCreditCardPayment:(nullable MakePanCreditCardPaymentInput *)input completion:(void(^)(CcppPaymentResponse *_Nullable, FlutterError *_Nullable))completion;
+-(void)makePanCreditCardInstallmentPayment:(nullable MakePanCreditCardInstallmentPaymentInput *)input completion:(void(^)(CcppPaymentResponse *_Nullable, FlutterError *_Nullable))completion;
+-(void)makeTokenizedCreditCardInstallmentPayment:(nullable MakeTokenizedCreditCardInstallmentPaymentInput *)input completion:(void(^)(CcppPaymentResponse *_Nullable, FlutterError *_Nullable))completion;
+-(void)makeQRPayment:(nullable MakeQRPaymentInput *)input completion:(void(^)(CcppPaymentResponse *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void CcppApiSetup(id<FlutterBinaryMessenger> binaryMessenger, id<CcppApi> _Nullable api);
