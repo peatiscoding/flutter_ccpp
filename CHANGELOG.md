@@ -11,3 +11,7 @@
   * [Payment with Installment via CardToken](https://developer.2c2p.com/v4.0.2/docs/sdk-installment-payment-plan)
   * [Payment with Installment via PAN](https://developer.2c2p.com/v4.0.2/docs/sdk-installment-payment-plan)
   * [Payment with CreditCard](https://developer.2c2p.com/v4.0.2/docs/sdk-method-qr-payment)
+
+## 0.0.3
+
+* Allow QR Payment to configure payment channel as per [DOC](https://developer.2c2p.com/docs/reference-payment-channels#section-qr-payment-qrc-csqr-thqr-sgqr)
