@@ -227,6 +227,10 @@ public class Pigeon {
     public String getMobileNumber() { return mobileNumber; }
     public void setMobileNumber(String setterArg) { this.mobileNumber = setterArg; }
 
+    private String channelCode;
+    public String getChannelCode() { return channelCode; }
+    public void setChannelCode(String setterArg) { this.channelCode = setterArg; }
+
     private String qrCodeType;
     public String getQrCodeType() { return qrCodeType; }
     public void setQrCodeType(String setterArg) { this.qrCodeType = setterArg; }
@@ -237,6 +241,7 @@ public class Pigeon {
       toMapResult.put("name", name);
       toMapResult.put("email", email);
       toMapResult.put("mobileNumber", mobileNumber);
+      toMapResult.put("channelCode", channelCode);
       toMapResult.put("qrCodeType", qrCodeType);
       return toMapResult;
     }
@@ -250,6 +255,8 @@ public class Pigeon {
       fromMapResult.email = (String)email;
       Object mobileNumber = map.get("mobileNumber");
       fromMapResult.mobileNumber = (String)mobileNumber;
+      Object channelCode = map.get("channelCode");
+      fromMapResult.channelCode = (String)channelCode;
       Object qrCodeType = map.get("qrCodeType");
       fromMapResult.qrCodeType = (String)qrCodeType;
       return fromMapResult;

@@ -117,13 +117,11 @@ public class SwiftFlutterCcppPlugin: NSObject, FlutterPlugin, CcppApi {
               let qrCodeType = input?.qrCodeType,
               let paymentToken = input?.paymentToken,
               let mobileNumber = input?.mobileNumber,
+              let channelCode = input?.channelCode,
               let name = input?.name else {
             fatalError("Invalid request")
         }
-        let paymentCode: PaymentCode = PaymentCode(channelCode: "VEMVQR")
-        if qrCodeType == "raw" {
-            
-        }
+        let paymentCode: PaymentCode = PaymentCode(channelCode: channelCode)
          
         let paymentRequest: PaymentRequest = QRPaymentBuilder(paymentCode: paymentCode)
             .type(makeQrType(qrCodeType))

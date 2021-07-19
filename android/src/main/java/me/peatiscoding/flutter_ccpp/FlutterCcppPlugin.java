@@ -126,7 +126,7 @@ public class FlutterCcppPlugin implements Pigeon.CcppApi, FlutterPlugin {
   @Override
   public void makeQRPayment(Pigeon.MakeQRPaymentInput arg, Pigeon.Result<Pigeon.CcppPaymentResponse> result) {
     // Step 3: Construct credit card request.
-    PaymentCode paymentCode = new PaymentCode("VEMVQR");
+    PaymentCode paymentCode = new PaymentCode(arg.getChannelCode());
 
     PaymentRequest paymentRequest = new QRPaymentBuilder(paymentCode)
             .setType(makeQRCodeType(arg.getQrCodeType()))

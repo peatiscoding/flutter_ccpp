@@ -13,6 +13,26 @@ enum QRType {
   url,
 }
 
+enum ChannelQRCode {
+  alqr,
+  wcqr,
+  amexqr,
+  vemvqr,
+  mcemvqr,
+  jcbqr,
+  upiemvqr,
+  ppqr,
+  gpthqr,
+  apqr,
+  pnqr,
+  gpqr,
+  cbpqr,
+  kbzqr,
+  gipqr
+}
+
+
+
 class FlutterCcpp {
   static CcppApi? _apiInstance;
 
@@ -21,6 +41,26 @@ class FlutterCcpp {
       _apiInstance = CcppApi();
     }
     return _apiInstance!;
+  }
+
+  static String makeChannelQRCode(ChannelQRCode qrCode) {
+    switch (qrCode) {
+      case ChannelQRCode.alqr: return "ALQR";
+      case ChannelQRCode.wcqr: return "WCQR";
+      case ChannelQRCode.amexqr: return "AMEXQR";
+      case ChannelQRCode.vemvqr: return "VEMVQR";
+      case ChannelQRCode.mcemvqr: return "MCEMVQR";
+      case ChannelQRCode.jcbqr: return "JCBQR";
+      case ChannelQRCode.upiemvqr: return "UPIEMVQR";
+      case ChannelQRCode.ppqr: return "PPQR";
+      case ChannelQRCode.gpthqr: return "GPTHQR";
+      case ChannelQRCode.apqr: return "APQR";
+      case ChannelQRCode.pnqr: return "PNQR";
+      case ChannelQRCode.gpqr: return "GPQR";
+      case ChannelQRCode.cbpqr: return "CBPQR";
+      case ChannelQRCode.kbzqr: return "KBZQR";
+      case ChannelQRCode.gipqr: return "GIPQR";
+    }
   }
 
   // Expose as public method
@@ -86,8 +126,9 @@ class FlutterCcpp {
     return resp;
   }
 
-  static Future<CcppPaymentResponse> makeQRPayment(String paymentToken, String name, String mobileNumber, String email, QRType qrCodeType) async {
+  static Future<CcppPaymentResponse> makeQRPayment(ChannelQRCode channelCode, String paymentToken, String name, String mobileNumber, String email, QRType qrCodeType) async {
     var req = MakeQRPaymentInput();
+    req.channelCode = FlutterCcpp.makeChannelQRCode(channelCode);
     req.paymentToken = paymentToken;
     req.name = name;
     req.mobileNumber = mobileNumber;

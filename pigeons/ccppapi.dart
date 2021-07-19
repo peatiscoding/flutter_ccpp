@@ -40,6 +40,12 @@ class MakeQRPaymentInput {
   String? mobileNumber;
 
   /*
+   * https://developer.2c2p.com/docs/reference-payment-channels#section-qr-payment-qrc-csqr-thqr-sgqr
+   * "VEMVQR" | "PPQR" | "ALQR" | "WCQR" | "AMEXQR" | "MCEMVQR" | "JCBQR" | "UPIEMVQR" | "GPTQR" | "APQR" | "PNQR" | "GPQR" | "CBPQR" | "KBZQR" |"GIPQR"
+   */
+  String? channelCode;
+
+  /*
    * "raw" | "base64" | "url"
    */
   String? qrCodeType;

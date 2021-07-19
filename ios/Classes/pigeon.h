@@ -52,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString * name;
 @property(nonatomic, copy, nullable) NSString * email;
 @property(nonatomic, copy, nullable) NSString * mobileNumber;
+@property(nonatomic, copy, nullable) NSString * channelCode;
 @property(nonatomic, copy, nullable) NSString * qrCodeType;
 @end
 

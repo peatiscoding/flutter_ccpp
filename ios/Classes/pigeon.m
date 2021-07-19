@@ -190,6 +190,10 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
   if ((NSNull *)result.mobileNumber == [NSNull null]) {
     result.mobileNumber = nil;
   }
+  result.channelCode = dict[@"channelCode"];
+  if ((NSNull *)result.channelCode == [NSNull null]) {
+    result.channelCode = nil;
+  }
   result.qrCodeType = dict[@"qrCodeType"];
   if ((NSNull *)result.qrCodeType == [NSNull null]) {
     result.qrCodeType = nil;
@@ -197,7 +201,7 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
   return result;
 }
 -(NSDictionary*)toMap {
-  return [NSDictionary dictionaryWithObjectsAndKeys:(self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.name ? self.name : [NSNull null]), @"name", (self.email ? self.email : [NSNull null]), @"email", (self.mobileNumber ? self.mobileNumber : [NSNull null]), @"mobileNumber", (self.qrCodeType ? self.qrCodeType : [NSNull null]), @"qrCodeType", nil];
+  return [NSDictionary dictionaryWithObjectsAndKeys:(self.paymentToken ? self.paymentToken : [NSNull null]), @"paymentToken", (self.name ? self.name : [NSNull null]), @"name", (self.email ? self.email : [NSNull null]), @"email", (self.mobileNumber ? self.mobileNumber : [NSNull null]), @"mobileNumber", (self.channelCode ? self.channelCode : [NSNull null]), @"channelCode", (self.qrCodeType ? self.qrCodeType : [NSNull null]), @"qrCodeType", nil];
 }
 @end
 

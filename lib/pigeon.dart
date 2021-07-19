@@ -127,6 +127,7 @@ class MakeQRPaymentInput {
   String? name;
   String? email;
   String? mobileNumber;
+  String? channelCode;
   String? qrCodeType;
 
   Object encode() {
@@ -135,6 +136,7 @@ class MakeQRPaymentInput {
     pigeonMap['name'] = name;
     pigeonMap['email'] = email;
     pigeonMap['mobileNumber'] = mobileNumber;
+    pigeonMap['channelCode'] = channelCode;
     pigeonMap['qrCodeType'] = qrCodeType;
     return pigeonMap;
   }
@@ -146,6 +148,7 @@ class MakeQRPaymentInput {
       ..name = pigeonMap['name'] as String?
       ..email = pigeonMap['email'] as String?
       ..mobileNumber = pigeonMap['mobileNumber'] as String?
+      ..channelCode = pigeonMap['channelCode'] as String?
       ..qrCodeType = pigeonMap['qrCodeType'] as String?;
   }
 }
