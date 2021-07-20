@@ -125,15 +125,25 @@ public class FlutterCcppPlugin implements Pigeon.CcppApi, FlutterPlugin {
 
   @Override
   public void makeQRPayment(Pigeon.MakeQRPaymentInput arg, Pigeon.Result<Pigeon.CcppPaymentResponse> result) {
-    // Step 3: Construct credit card request.
+    // Step 3: Construct qr request.
     PaymentCode paymentCode = new PaymentCode(arg.getChannelCode());
 
-    PaymentRequest paymentRequest = new QRPaymentBuilder(paymentCode)
-            .setType(makeQRCodeType(arg.getQrCodeType()))
-            .setName(arg.getName())
-            .setMobileNo(arg.getMobileNumber())
-            .setEmail(arg.getEmail())
-            .build();
+    QRPaymentBuilder qrPaymentBuilder = new QRPaymentBuilder(paymentCode)
+            .setType(makeQRCodeType(arg.getQrCodeType()));
+
+    if (arg.getName() != null && !arg.getName().isEmpty()) {
+      qrPaymentBuilder.setName(arg.getName());
+    }
+
+    if (arg.getEmail() != null && !arg.getEmail().isEmpty()) {
+      qrPaymentBuilder.setEmail(arg.getEmail());
+    }
+
+    if (arg.getMobileNumber() != null && !arg.getMobileNumber().isEmpty()) {
+      qrPaymentBuilder.setMobileNo(arg.getMobileNumber());
+    }
+
+     PaymentRequest paymentRequest = qrPaymentBuilder.build();
 
     // Step 4: Construct transaction request.
     TransactionResultRequest transactionResultRequest = new TransactionResultRequestBuilder(arg.getPaymentToken())

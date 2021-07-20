@@ -126,7 +126,7 @@ class FlutterCcpp {
     return resp;
   }
 
-  static Future<CcppPaymentResponse> makeQRPayment(ChannelQRCode channelCode, String paymentToken, String name, String mobileNumber, String email, QRType qrCodeType) async {
+  static Future<CcppPaymentResponse> makeQRPayment(ChannelQRCode channelCode, String paymentToken, String? name, String? mobileNumber, String? email, QRType qrCodeType) async {
     var req = MakeQRPaymentInput();
     req.channelCode = FlutterCcpp.makeChannelQRCode(channelCode);
     req.paymentToken = paymentToken;
