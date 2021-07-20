@@ -31,7 +31,60 @@ enum ChannelQRCode {
   gipqr
 }
 
-
+const Map<String, String> responseCodeMap = {
+  "0000": "API success",
+  "9004": "The {0} value is not valid",
+  "9005": "Some mandatory fields are missing",
+  "9006": "This fields exceeded their authorized length",
+  "9007": "Invalid merchant",
+  "9008": "Invalid payment expiry",
+  "9009": "Amount is invalid",
+  "9010": "Invalid CurrencyCode",
+  "9012": "paymentItem name is required",
+  "9013": "paymentItem quantity is required",
+  "9014": "paymentItem amount is required",
+  "9015": "Existed Invoice Number",
+  "9035": "Payment failed",
+  "9037": "Merchant configuration is missing",
+  "9038": "Failed To Generate Token",
+  "9039": "The merchant frontend url is missing",
+  "9040": "The token is invalid",
+  "9041": "Payment Token already used",
+  "9042": "Hash Value Mismatch",
+  "9057": "Payment options are invalid",
+  "9058": "Payment channel invalid",
+  "9059": "Payment channel unauthorized",
+  "9060": "Payment channel unconfigured",
+  "9078": "Promotion code does not exist",
+  "9080": "Tokenize Not Allow",
+  "9088": "SubMerchant is required",
+  "9089": "Duplicated SubMerchant",
+  "9090": "SubMerchant Not Found",
+  "9091": "Invalid Sub Merchant ID",
+  "9092": "Invalid Sub Merchant invoiceNo",
+  "9093": "Existing Sub Merchant Invoice Number",
+  "9094": "Invalid Sub Merchant Amount",
+  "9095": "Sub Merchant Amount MissMatch",
+  "9901": "Invalid invoicePrefix",
+  "9902": "allowAccumulate is required",
+  "9903": "maxAccumulateAmount is required",
+  "9904": "recurringInterval or ChargeOnDate is Required",
+  "9905": "recurringCount is required",
+  "9906": "recurringInterval or ChargeOnDate is Required",
+  "9907": "Invalid ChargeNextDate",
+  "9908": "Invalid ChargeOnDate",
+  "9909": "chargeNextDate is required",
+  "9990": "Request to merchant front end has failed",
+  "9991": "Request merchant secure has failed",
+  "9992": "Request payment secure has failed",
+  "9993": "An unknown error has occured",
+  "9994": "Request DB service has failed",
+  "9995": "Request Payment service has failed",
+  "9996": "Request Qwik service has failed",
+  "9997": "Request User preferences has failed",
+  "9998": "Request store card has failed.",
+  "9999": "Request to merchant back end has failed"
+};
 
 class FlutterCcpp {
   static CcppApi? _apiInstance;
@@ -61,6 +114,14 @@ class FlutterCcpp {
       case ChannelQRCode.kbzqr: return "KBZQR";
       case ChannelQRCode.gipqr: return "GIPQR";
     }
+  }
+
+  static String mapResponseCode(String responseCode) {
+    String? responseMessage = responseCodeMap[responseCode];
+    if (responseMessage == null) {
+      return "Unknown Code: " + responseCode;
+    }
+    return responseMessage;
   }
 
   // Expose as public method
