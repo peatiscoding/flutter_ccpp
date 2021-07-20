@@ -113,22 +113,28 @@ public class SwiftFlutterCcppPlugin: NSObject, FlutterPlugin, CcppApi {
     }
     
     public func makeQRPayment(_ input: MakeQRPaymentInput?, completion: @escaping (CcppPaymentResponse?, FlutterError?) -> Void) {
-        guard let email = input?.email,
-              let qrCodeType = input?.qrCodeType,
-              let paymentToken = input?.paymentToken,
-              let mobileNumber = input?.mobileNumber,
+        guard let qrCodeType = input?.qrCodeType,
               let channelCode = input?.channelCode,
-              let name = input?.name else {
+              let paymentToken = input?.paymentToken else {
             fatalError("Invalid request")
         }
         let paymentCode: PaymentCode = PaymentCode(channelCode: channelCode)
-         
-        let paymentRequest: PaymentRequest = QRPaymentBuilder(paymentCode: paymentCode)
+        var builder: QRPaymentBuilder = QRPaymentBuilder(paymentCode: paymentCode)
             .type(makeQrType(qrCodeType))
-            .name(name)
-            .email(email)
-            .mobileNo(mobileNumber)
-            .build()
+            
+        if let name = input?.name, name != "" {
+            builder = builder.name(name)
+        }
+        
+        if let email = input?.email, email != "" {
+            builder = builder.email(email)
+        }
+        
+        if let mobileNumber = input?.mobileNumber, mobileNumber != "" {
+            builder = builder.mobileNo(mobileNumber)
+        }
+            
+        let paymentRequest = builder.build()
         let transactionResultRequest: TransactionResultRequest = TransactionResultRequestBuilder(paymentToken: paymentToken)
             .with(paymentRequest)
             .build()

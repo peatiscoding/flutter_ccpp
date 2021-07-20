@@ -1,3 +1,11 @@
+## 0.0.6
+
+* Fixed QR Code payment for iOS
+
+## 0.0.5
+
+* Fixed QR Code payment for Android
+
 ## 0.0.4
 
 * Added static utliity method to callable to map the response code upon request.
