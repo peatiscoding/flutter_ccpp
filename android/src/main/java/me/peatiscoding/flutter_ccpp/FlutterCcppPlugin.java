@@ -20,6 +20,10 @@ import com.ccpp.pgw.sdk.android.model.api.TransactionResultResponse;
 import com.ccpp.pgw.sdk.android.model.core.PGWSDKParams;
 
 import androidx.annotation.NonNull;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSocketFactory;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodChannel;
 import me.peatiscoding.flutter_ccpp.pigeon.Pigeon;
@@ -180,15 +184,22 @@ public class FlutterCcppPlugin implements Pigeon.CcppApi, FlutterPlugin {
           // Work around while waiting for Pigeon to fix Error report mechanic.
           resp.setError("Unknown responseCode: " + response.getResponseCode());
         }
+        resetSSLSocketFactory();
         result.success(resp);
       }
 
       @Override
       public void onFailure(Throwable error) {
+        resetSSLSocketFactory();
         //Get error response and display error.
         Pigeon.CcppPaymentResponse resp = new Pigeon.CcppPaymentResponse();
         resp.setError("2c2p failed" + error.getLocalizedMessage());
       }
     });
   }
+
+  private void resetSSLSocketFactory() {
+    HttpsURLConnection.setDefaultSSLSocketFactory((SSLSocketFactory) SSLSocketFactory.getDefault());
+  }
+
 }
