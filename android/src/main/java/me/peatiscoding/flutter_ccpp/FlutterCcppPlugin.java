@@ -2,6 +2,8 @@ package me.peatiscoding.flutter_ccpp;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.ccpp.pgw.sdk.android.builder.CardPaymentBuilder;
 import com.ccpp.pgw.sdk.android.builder.CardTokenPaymentBuilder;
 import com.ccpp.pgw.sdk.android.builder.PGWSDKParamsBuilder;
@@ -19,7 +21,9 @@ import com.ccpp.pgw.sdk.android.model.api.TransactionResultRequest;
 import com.ccpp.pgw.sdk.android.model.api.TransactionResultResponse;
 import com.ccpp.pgw.sdk.android.model.core.PGWSDKParams;
 
-import androidx.annotation.NonNull;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSocketFactory;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodChannel;
 import me.peatiscoding.flutter_ccpp.pigeon.Pigeon;
@@ -29,6 +33,7 @@ public class FlutterCcppPlugin implements Pigeon.CcppApi, FlutterPlugin {
 
   private MethodChannel channel;
   private Context applicationContext;
+  private static boolean isAutoResetSSLSocket = true;
 
   public void onAttachedToEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
     this.applicationContext = flutterPluginBinding.getApplicationContext();
@@ -180,15 +185,30 @@ public class FlutterCcppPlugin implements Pigeon.CcppApi, FlutterPlugin {
           // Work around while waiting for Pigeon to fix Error report mechanic.
           resp.setError("Unknown responseCode: " + response.getResponseCode());
         }
+        resetSSLSocketFactory();
         result.success(resp);
       }
 
       @Override
       public void onFailure(Throwable error) {
+        resetSSLSocketFactory();
         //Get error response and display error.
         Pigeon.CcppPaymentResponse resp = new Pigeon.CcppPaymentResponse();
         resp.setError("2c2p failed" + error.getLocalizedMessage());
       }
     });
   }
+
+  private void resetSSLSocketFactory() {
+    if (!isAutoResetSSLSocket) {
+      return;
+    }
+    HttpsURLConnection.setDefaultSSLSocketFactory((SSLSocketFactory) SSLSocketFactory.getDefault());
+  }
+
+  @Override
+  public void setAutoResetSSLSocket(boolean isEnabled) {
+    isAutoResetSSLSocket = isEnabled;
+  }
+
 }
