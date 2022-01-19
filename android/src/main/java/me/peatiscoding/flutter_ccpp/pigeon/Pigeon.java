@@ -3,12 +3,12 @@
 
 package me.peatiscoding.flutter_ccpp.pigeon;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.StandardMessageCodec;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 /** Generated class from Pigeon. */
 @SuppressWarnings({"unused", "unchecked", "CodeBlock2Expr", "RedundantSuppression"})
@@ -323,6 +323,7 @@ public class Pigeon {
     void makePanCreditCardInstallmentPayment(MakePanCreditCardInstallmentPaymentInput arg, Result<CcppPaymentResponse> result);
     void makeTokenizedCreditCardInstallmentPayment(MakeTokenizedCreditCardInstallmentPaymentInput arg, Result<CcppPaymentResponse> result);
     void makeQRPayment(MakeQRPaymentInput arg, Result<CcppPaymentResponse> result);
+    void setAutoResetSSLSocket(boolean arg);
 
     /** Sets up an instance of `CcppApi` to handle messages through the `binaryMessenger`. */
     static void setup(BinaryMessenger binaryMessenger, CcppApi api) {
@@ -459,6 +460,25 @@ public class Pigeon {
               wrapped.put("error", wrapError(exception));
               reply.reply(wrapped);
             }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+                new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.CcppApi.setAutoResetSSLSocket", new StandardMessageCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              api.setAutoResetSSLSocket((boolean)message);
+              wrapped.put("result", null);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+            }
+            reply.reply(wrapped);
           });
         } else {
           channel.setMessageHandler(null);

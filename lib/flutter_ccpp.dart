@@ -207,4 +207,8 @@ class FlutterCcpp {
     }
     return resp;
   }
+
+  static setAutoResetSSLSocket(bool isEnabled) async {
+    await _api.setAutoResetSSLSocket(isEnabled);
+  }
 }
