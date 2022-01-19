@@ -1,3 +1,9 @@
+## 0.0.7
+
+* Added `setAutoResetSSLSocket(bool)` method.
+* `setAutoResetSSLSocket(true)` will make sure Android reset the SSL connection
+every time the request has completed.
+
 ## 0.0.6
 
 * Fixed QR Code payment for iOS

@@ -1,6 +1,6 @@
 name: flutter_ccpp
 description: 2C2P Plugin for SDK v4 (PGW)
-version: 0.0.6
+version: 0.0.7
 homepage: https://github.com/peatiscoding/flutter_ccpp
 
 environment:
