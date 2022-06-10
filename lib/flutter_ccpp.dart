@@ -166,6 +166,8 @@ class FlutterCcpp {
     req.panExpiryYear = panExpiryYear;
     req.paymentToken = paymentToken;
     req.securityCode = securityCode;
+    req.period = period;
+    req.paidByCustomer = paidByCustomer;
     var resp = await _api.makePanCreditCardInstallmentPayment(req);
     if (resp.error != null) {
       throw Exception(resp.error);
@@ -179,7 +181,8 @@ class FlutterCcpp {
     req.paymentToken = paymentToken;
     req.securityCode = securityCode;
     req.paymentToken = paymentToken;
-    req.securityCode = securityCode;
+    req.period = period;
+    req.paidByCustomer = paidByCustomer;
     var resp = await _api.makeTokenizedCreditCardInstallmentPayment(req);
     if (resp.error != null) {
       throw Exception(resp.error);
